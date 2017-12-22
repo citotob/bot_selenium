@@ -114,9 +114,13 @@ def login_bo_okecash88(driver, username, password):
                 except:
                     pass
 
+            if not found_action and notFoundTransactionLogBCA(deposit[1:], Delay, name):
+                l = amount
+
+        processTransactionBCA(processData, username)
+
     except TimeoutException:
         print("Element(s) not found in okecash88.com")
-
 
 if __name__ == "__main__":
     Config = ConfigParser.ConfigParser()

@@ -49,8 +49,8 @@ def lookup(driver, username, password):
             driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'menu')))
             #try:
             # Click Account Information
-            #driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Informasi Rekeniing'))).click()
-            driver.find_element_by_link_text("Informasi Rekening").click()
+            driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Informasi Rekening'))).click()
+            #driver.find_element_by_link_text("Informasi Rekening").click()
 
             # Click Account Statement
             driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'Mutasi Rekening'))).click()
