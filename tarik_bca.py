@@ -17,7 +17,7 @@ def init_driver():
     driver.wait = WebDriverWait(driver, 2)
     return driver
  
-def lookup(driver, username, password):
+def login_bca(driver, username, password):
     data = []
     raw_data = []
     login=False
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     username = Config.get('bca', 'username')
     password = Config.get('bca', 'password')
     driver = init_driver()
-    login = lookup(driver, username, password)
+    login = login_bca(driver, username, password)
     if login:
         driver.switch_to_default_content()
         driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'header')))
