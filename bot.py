@@ -282,7 +282,8 @@ def login_bo_okecash88(driver, username, password):
             #driver.quit()
 
     except TimeoutException:
-        print("Element(s) not found in okecash88.com")
+        #driver.get("http://v02.okecash88.com/logout.php")
+        print("ok")
 
 if __name__ == "__main__":
     Config = ConfigParser.ConfigParser()

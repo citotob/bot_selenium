@@ -67,9 +67,9 @@ def lookup(driver, username, password):
             # Back to main frame
             driver.switch_to_default_content()
             driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'CONTENT')))
-            driver.find_element_by_xpath("//input[@value='R']").click()
+            #driver.find_element_by_xpath("//input[@value='R']").click()
             #driver.wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@value='R']')))
-            yesterday = datetime.now() - timedelta(days=7)
+            yesterday = datetime.now() - timedelta(days=1)
             day = yesterday.strftime("%d")
             month = yesterday.strftime("%b")
             year = yesterday.strftime("%Y")
@@ -122,17 +122,28 @@ def lookup(driver, username, password):
                     raw_data.append(data)
                 n += 4
             raw_data = raw_data[::-1]
-            print(deposit_list)
 
         if raw_data:
             new_data, timenow = transactionLogMandiri(raw_data, username, yesterday)
             transactionFilenameMandiri = os.getcwd() + "/data/" + yesterday + "_TransactionMandiri_" + username + ".txt"
             pendingTransactionMandiri(new_data, transactionFilenameMandiri, yesterday, timenow, username)
 
-        return login
+        logout()
+        #driver.switch_to_default_content()
+        #driver.switch_to_frame("top")
+        #driver.find_element_by_partial_link_text("LOGOUT").click()
+        #return login
     except TimeoutException:
-        print("Element(s) not found in bankmandiri.com")
-        return login
+        if login:
+            logout()
+        print("ok")
+        #return login
+
+def logout():
+    driver.switch_to_default_content()
+    driver.switch_to_frame("top")
+    driver.find_element_by_partial_link_text("LOGOUT").click()
+    driver.quit()
 
 if __name__ == "__main__":
     # get data config mandiri
@@ -142,10 +153,10 @@ if __name__ == "__main__":
     password = Config.get('mandiri', 'password')
     driver = init_driver()
     login = lookup(driver, username, password)
-    if login:
-        driver.switch_to_default_content()
-        driver.switch_to_frame("top")
-        driver.find_element_by_partial_link_text("LOGOUT").click()
+    #if login:
+    #    driver.switch_to_default_content()
+    #    driver.switch_to_frame("top")
+    #    driver.find_element_by_partial_link_text("LOGOUT").click()
 
     #time.sleep(5)
-    driver.quit()
+    #driver.quit()

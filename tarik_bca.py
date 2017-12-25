@@ -146,10 +146,22 @@ def login_bca(driver, username, password):
             transactionFilenameBCA = os.getcwd() + "/data/" + yesterday + "_TransactionBCA_" + username + ".txt"
             pendingTransactionBCA(new_data, transactionFilenameBCA, yesterday, timenow, username)
 
-        return login
+        logout()
+        #driver.switch_to_default_content()
+        #driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'header')))
+        #driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'LOGOUT'))).click()
+        #return login
     except TimeoutException:
-        print("Element(s) not found in klikbca.com")
-        return login
+        if login:
+            logout()
+        print("ok")
+        #return login
+
+def logout():
+    driver.switch_to_default_content()
+    driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'header')))
+    driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'LOGOUT'))).click()
+    driver.quit()
 
 if __name__ == "__main__":
     # get data config bca
@@ -159,9 +171,9 @@ if __name__ == "__main__":
     password = Config.get('bca', 'password')
     driver = init_driver()
     login = login_bca(driver, username, password)
-    if login:
-        driver.switch_to_default_content()
-        driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'header')))
-        driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'LOGOUT'))).click()
+    #if login:
+    #    driver.switch_to_default_content()
+    #    driver.wait.until(EC.frame_to_be_available_and_switch_to_it((By.NAME,'header')))
+    #    driver.wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'LOGOUT'))).click()
     #time.sleep(5)
-    driver.quit()
+    #driver.quit()
